@@ -1,7 +1,7 @@
 using AutoMapper;
 using MediatR;
 using FluentValidation;
-using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.Domain.Users.Repositories;
 
 namespace Ambev.DeveloperEvaluation.Application.Users.GetUser;
 
