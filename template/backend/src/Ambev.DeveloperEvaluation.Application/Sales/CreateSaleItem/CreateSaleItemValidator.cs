@@ -5,7 +5,7 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSaleItem;
 /// <summary>
 ///     Validator for CreateSaleItemCommand that defines validation rules for sale creation command.
 /// </summary>
-public class CreateSaleItemCommandValidator : AbstractValidator<CreateSaleItemCommand>
+public class CreateSaleItemValidator : AbstractValidator<CreateSaleItemCommand>
 {
     /// <summary>
     ///     Validates instances of <see cref="CreateSaleItemCommand" />.
@@ -16,7 +16,7 @@ public class CreateSaleItemCommandValidator : AbstractValidator<CreateSaleItemCo
     ///     - Quantity: Must be greater than zero and less than 20.
     ///     - UnitPrice: Must be greater than or equal to zero.
     /// </remarks>
-    public CreateSaleItemCommandValidator()
+    public CreateSaleItemValidator()
     {
         RuleFor(item => item.Product).IsInEnum();
         RuleFor(item => item.Quantity).GreaterThan(0).LessThan(20);
