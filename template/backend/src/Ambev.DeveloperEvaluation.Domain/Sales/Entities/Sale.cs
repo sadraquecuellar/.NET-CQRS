@@ -1,81 +1,109 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Branchs.Entities;
-using Ambev.DeveloperEvaluation.Domain.Common.Entities;
-using Ambev.DeveloperEvaluation.Domain.Customers.Entities;
-using Ambev.DeveloperEvaluation.Domain.Products.Entities;
+﻿using Ambev.DeveloperEvaluation.Domain.Common.Entities;
+using Ambev.DeveloperEvaluation.Domain.Common.Enums;
 
 namespace Ambev.DeveloperEvaluation.Domain.Sales.Entities;
 
+/// <summary>
+///     Represents a sales transaction in the system.
+/// </summary>
 public class Sale : BaseEntity
 {
-    public string SaleNumber { get; set; } = string.Empty;
-    public DateTime Date { get; set; } = DateTime.UtcNow;
-
-    public Customer Customer { get; set; } = default!;
-    public Branch Branch { get; set; } = default!;
-
-    private readonly List<SaleItem> _items = [];
-    public IReadOnlyCollection<SaleItem> Items => _items.AsReadOnly();
-
-    public decimal TotalAmount => _items.Sum(i => i.Total);
-    public bool IsCancelled { get; set; } = false;
-
-    public Sale(string saleNumber, Customer customer, Branch branch)
+    /// <summary>
+    ///     Constructor to set default parameters.
+    /// </summary>
+    public Sale(Customer customer, Branch branch)
     {
-        SaleNumber = saleNumber;
         Customer = customer;
         Branch = branch;
     }
 
+    /// <summary>
+    ///     Unique sale number.
+    /// </summary>
+    public string SaleNumber { get; set; } = GenerateSaleNumber();
+
+    /// <summary>
+    ///     Date when the sale was made.
+    /// </summary>
+    public DateTime Date { get; set; } = DateTime.UtcNow;
+
+    /// <summary>
+    ///     Customer
+    /// </summary>
+    public Customer Customer { get; set; } = default!;
+
+    /// <summary>
+    ///     Branch
+    /// </summary>
+    public Branch Branch { get; set; } = default!;
+
+    /// <summary>
+    ///     List of items included in the sale.
+    /// </summary>
+    public List<SaleItem> Items = [];
+
+    /// <summary>
+    ///     Total Amount of sale
+    /// </summary>
+    public decimal TotalAmount => Items.Sum(i => i.Total);
+
+    /// <summary>
+    ///     Indicates whether the sale has been canceled.
+    /// </summary>
+    public bool IsCancelled { get; set; } = false;
+
+
+    /// <summary>
+    ///     Add new item for sale.
+    /// </summary>
     public void AddItem(Product product, int quantityToAdd, decimal unitPrice)
     {
         if (IsCancelled)
             throw new InvalidOperationException("Cannot modify a cancelled sale.");
 
-        var existingItem = _items.FirstOrDefault(i => i.Product.Id == product.Id);
+        var existingItem = Items.FirstOrDefault(i => i.Product == product);
 
         if (existingItem != null)
         {
             int newQuantity = existingItem.Quantity + quantityToAdd;
-
-            if (newQuantity > 20)
-                throw new InvalidOperationException("Cannot sell more than 20 units of the same product.");
-
             existingItem.UpdateQuantity(newQuantity);
-            LogEvent("SaleItemUpdated", $"Product {product.Name} quantity updated to {newQuantity}.");
         }
         else
         {
-            if (quantityToAdd > 20)
-                throw new InvalidOperationException("Cannot sell more than 20 units of the same product.");
-
-            var item = new SaleItem(product, quantityToAdd, unitPrice);
-            _items.Add(item);
-            LogEvent("SaleItemAdded", $"Product {product.Name} added with quantity {quantityToAdd}.");
+            var item = new SaleItem(this.Id, product, quantityToAdd, unitPrice);
+            Items.Add(item);
         }
     }
 
-    public void CancelItem(Guid productId)
+    /// <summary>
+    ///     Cancels an item from sale.
+    /// </summary>
+    public void CancelItem(Product product)
     {
-        var item = _items.FirstOrDefault(i => i.Product.Id == productId);
+        var item = Items.FirstOrDefault(i => i.Product == product);
         if (item == null)
             throw new InvalidOperationException("Item not found in this sale.");
 
         item.Cancel();
-        LogEvent("ItemCancelled", $"Product {item.Product.Name} was cancelled.");
     }
 
+    /// <summary>
+    ///     Cancels the sale.
+    /// </summary>
     public void CancelSale()
     {
         if (IsCancelled)
             return;
 
         IsCancelled = true;
-        LogEvent("SaleCancelled", $"Sale {SaleNumber} was cancelled.");
     }
 
-    private static void LogEvent(string eventName, string message)
+    /// <summary>
+    ///     Generate a unique sale number.
+    /// </summary>
+    private static string GenerateSaleNumber()
     {
-        Console.WriteLine($"[Event: {eventName}] - {message}");
+        return $"SALE-{DateTime.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString()[..8].ToUpper()}";
     }
 }
 

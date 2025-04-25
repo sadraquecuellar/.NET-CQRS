@@ -1,8 +1,8 @@
 using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Common.Entities;
-using Ambev.DeveloperEvaluation.Domain.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Users.Enums;
+using Ambev.DeveloperEvaluation.Domain.Users.Validations;
 
 namespace Ambev.DeveloperEvaluation.Domain.Users.Entities;
 

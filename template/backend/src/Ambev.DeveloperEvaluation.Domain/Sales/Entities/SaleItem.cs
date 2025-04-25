@@ -1,46 +1,109 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Products.Entities;
+﻿using Ambev.DeveloperEvaluation.Domain.Common.Enums;
 
 namespace Ambev.DeveloperEvaluation.Domain.Sales.Entities;
 
+/// <summary>
+///     Represents an individual item in a sale transaction.
+/// </summary>
 public class SaleItem
 {
-    public Product Product { get; private set; }
-    public int Quantity { get; private set; }
-    public decimal UnitPrice { get; private set; }
-    public bool IsCancelled { get; private set; }
-
-    public decimal DiscountPercentage => GetDiscountPercentage(Quantity);
-    public decimal DiscountAmount => UnitPrice * Quantity * DiscountPercentage;
-    public decimal Total => IsCancelled ? 0 : UnitPrice * Quantity - DiscountAmount;
-
-    public SaleItem(Product product, int quantity, decimal unitPrice)
+    /// <summary>
+    ///     Creates a new sale item instance.
+    /// </summary>
+    public SaleItem(Guid saleId, Product product, int quantity, decimal unitPrice)
     {
+        SaleId = saleId;
         Product = product;
         Quantity = quantity;
         UnitPrice = unitPrice;
+        CalculateDiscount();
+        IsGreaterThan20();
     }
 
+    /// <summary>
+    ///     External identifier for the sale.
+    /// </summary>
+    public Guid SaleId { get; set; }
+
+    /// <summary>
+    ///     Product associated with the sale item.
+    /// </summary>
+    public Product Product { get; private set; }
+
+    /// <summary>
+    ///     Quantity of the product purchased.
+    /// </summary>
+    public int Quantity { get; set; }
+
+    /// <summary>
+    ///     Unit price of the product.
+    /// </summary>
+    public decimal UnitPrice { get; private set; }
+
+    /// <summary>
+    ///     Indicates whether the sale item has been canceled.
+    /// </summary>
+    public bool IsCancelled { get; private set; } = false;
+
+    /// <summary>
+    ///     Percentage discount applied to the product.
+    /// </summary>  
+    public decimal DiscountPercentage { get; private set; }
+
+    /// <summary>
+    ///     Discount amount applied to the product.
+    /// </summary>  
+    public decimal DiscountAmount { get; private set; }
+
+    /// <summary>
+    ///     Total amount for the item after applying discount.
+    /// </summary>
+    public decimal Total => IsCancelled ? 0 : UnitPrice * Quantity - DiscountAmount;
+
+    /// <summary>
+    ///     Update product quantity.
+    /// </summary>
     public void UpdateQuantity(int newQuantity)
     {
         if (newQuantity < 1)
             throw new InvalidOperationException("Quantity must be at least 1.");
 
         if (newQuantity > 20)
-            throw new InvalidOperationException("Cannot sell more than 20 units.");
+            throw new InvalidOperationException("Cannot sell more than 20 units of the same product.");
 
         Quantity = newQuantity;
     }
 
+    /// <summary>
+    ///     Cancels an item from sale.
+    /// </summary>
     public void Cancel()
     {
         IsCancelled = true;
     }
 
-    private static decimal GetDiscountPercentage(int quantity)
+    /// <summary>
+    ///     Calculates the discount based on the quantity.
+    /// </summary>
+    public void CalculateDiscount()
     {
-        if (quantity >= 10 && quantity <= 20) return 0.20m;
-        if (quantity >= 4 && quantity < 10) return 0.10m;
-        return 0.0m;
+        decimal discountRate = Quantity switch
+        {
+            < 4 => 0m,
+            < 10 => 0.10m,
+            _ => 0.20m
+        };
+
+        DiscountPercentage = discountRate * 100;
+        DiscountAmount = UnitPrice * discountRate * Quantity;
+    }
+
+    /// <summary>
+    ///    Checks if quantity is greater than 20.
+    /// </summary>
+    public void IsGreaterThan20()
+    {
+        if (Quantity > 20) throw new InvalidOperationException("Cannot sell more than 20 units of the same product.");
     }
 }
 
