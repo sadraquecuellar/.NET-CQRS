@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Ambev.DeveloperEvaluation.Application.Common;
+namespace Ambev.DeveloperEvaluation.Common.Helpers;
 public class PagedList<T>
 {
     public List<T> Items { get; set; }
