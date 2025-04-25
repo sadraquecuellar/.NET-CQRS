@@ -1,11 +1,12 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Common.Enums;
+﻿using Ambev.DeveloperEvaluation.Domain.Common.Entities;
+using Ambev.DeveloperEvaluation.Domain.Common.Enums;
 
 namespace Ambev.DeveloperEvaluation.Domain.Sales.Entities;
 
 /// <summary>
 ///     Represents an individual item in a sale transaction.
 /// </summary>
-public class SaleItem
+public class SaleItem : BaseEntity
 {
     /// <summary>
     ///     Creates a new sale item instance.
