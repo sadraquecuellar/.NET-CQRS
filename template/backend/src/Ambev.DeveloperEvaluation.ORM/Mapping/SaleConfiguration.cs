@@ -17,6 +17,7 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
 
         builder.Property(s => s.Date).IsRequired();
         builder.Property(s => s.IsCancelled).IsRequired();
+        builder.Property(si => si.TotalAmount).IsRequired().HasColumnType("decimal(18,2)");
 
         builder.Property(u => u.Customer)
             .HasConversion<string>()
