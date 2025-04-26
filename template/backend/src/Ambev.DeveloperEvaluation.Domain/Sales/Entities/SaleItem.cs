@@ -18,6 +18,7 @@ public class SaleItem : BaseEntity
         Quantity = quantity;
         UnitPrice = unitPrice;
         CalculateDiscount();
+        CalculateTotal();
         IsGreaterThan20();
     }
 
@@ -59,7 +60,7 @@ public class SaleItem : BaseEntity
     /// <summary>
     ///     Total amount for the item after applying discount.
     /// </summary>
-    public decimal Total => IsCancelled ? 0 : UnitPrice * Quantity - DiscountAmount;
+    public decimal Total { get; private set; }
 
     /// <summary>
     ///     Update product quantity.
@@ -97,6 +98,14 @@ public class SaleItem : BaseEntity
 
         DiscountPercentage = discountRate * 100;
         DiscountAmount = UnitPrice * discountRate * Quantity;
+    }
+
+    /// <summary>
+    ///     Calculate total.
+    /// </summary>
+    public void CalculateTotal()
+    {
+        Total = UnitPrice * Quantity - DiscountAmount;
     }
 
     /// <summary>

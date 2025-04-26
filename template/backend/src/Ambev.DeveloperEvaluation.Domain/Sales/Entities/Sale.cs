@@ -15,6 +15,7 @@ public class Sale : BaseEntity
     {
         Customer = customer;
         Branch = branch;
+        CalculateTotalAmount();
     }
 
     /// <summary>
@@ -45,13 +46,12 @@ public class Sale : BaseEntity
     /// <summary>
     ///     Total Amount of sale
     /// </summary>
-    public decimal TotalAmount => Items.Sum(i => i.Total);
+    public decimal TotalAmount { get; set; }
 
     /// <summary>
     ///     Indicates whether the sale has been canceled.
     /// </summary>
     public bool IsCancelled { get; set; } = false;
-
 
     /// <summary>
     ///     Add new item for sale.
@@ -73,6 +73,7 @@ public class Sale : BaseEntity
             var item = new SaleItem(this.Id, product, quantityToAdd, unitPrice);
             Items.Add(item);
         }
+        CalculateTotalAmount();
     }
 
     /// <summary>
@@ -99,11 +100,20 @@ public class Sale : BaseEntity
     }
 
     /// <summary>
+    ///     Calculate total.
+    /// </summary>
+    public void CalculateTotalAmount()
+    {
+        TotalAmount = Items.Sum(i => i.Total);
+    }
+
+    /// <summary>
     ///     Generate a unique sale number.
     /// </summary>
     private static string GenerateSaleNumber()
     {
         return $"SALE-{DateTime.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString()[..8].ToUpper()}";
     }
+
 }
 
