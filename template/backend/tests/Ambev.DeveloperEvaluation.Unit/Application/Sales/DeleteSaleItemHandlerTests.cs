@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Sales.DeleSaleItem;
+﻿using Ambev.DeveloperEvaluation.Application.Sales.DeleteSaleItem;
 using Ambev.DeveloperEvaluation.Domain.Sales.Repositories;
 using FluentAssertions;
 using NSubstitute;
