@@ -29,7 +29,7 @@ public class SaleItem : BaseEntity
     /// <summary>
     ///     Product associated with the sale item.
     /// </summary>
-    public Product Product { get; private set; }
+    public Product Product { get;  set; }
 
     /// <summary>
     ///     Quantity of the product purchased.
@@ -39,7 +39,7 @@ public class SaleItem : BaseEntity
     /// <summary>
     ///     Unit price of the product.
     /// </summary>
-    public decimal UnitPrice { get; private set; }
+    public decimal UnitPrice { get; set; }
 
     /// <summary>
     ///     Indicates whether the sale item has been canceled.

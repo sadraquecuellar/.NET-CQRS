@@ -34,7 +34,7 @@ public class CreateSaleItemHandler : IRequestHandler<CreateSaleItemCommand, Crea
     /// <returns>The created sale details</returns>
     public async Task<CreateSaleItemResult> Handle(CreateSaleItemCommand command, CancellationToken cancellationToken)
     {
-        var validator = new CreateSaleItemCommandValidator();
+        var validator = new CreateSaleItemValidator();
         var validationResult = await validator.ValidateAsync(command, cancellationToken);
 
         if (!validationResult.IsValid) throw new ValidationException(validationResult.Errors);

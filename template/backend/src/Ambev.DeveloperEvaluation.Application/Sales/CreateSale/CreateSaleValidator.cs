@@ -22,6 +22,6 @@ public class CreateSaleCommandValidator : AbstractValidator<CreateSaleCommand>
         RuleFor(sale => sale.Customer).IsInEnum();
         RuleFor(sale => sale.Branch).IsInEnum();
         RuleFor(sale => sale.Items).NotEmpty();
-        RuleForEach(sale => sale.Items).SetValidator(new CreateSaleItemCommandValidator());
+        RuleForEach(sale => sale.Items).SetValidator(new CreateSaleItemValidator());
     }
 }
