@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Ambev.DeveloperEvaluation.Application.Sales.DeleSaleItem;
+namespace Ambev.DeveloperEvaluation.Application.Sales.DeleteSaleItem;
 /// <summary>
 ///     Validator for DeleteSaleItemCommand that defines validation rules for sale deletion command.
 /// </summary>

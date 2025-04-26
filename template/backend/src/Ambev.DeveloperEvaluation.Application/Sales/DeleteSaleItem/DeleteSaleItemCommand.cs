@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Sales.DeleSaleItem;
+namespace Ambev.DeveloperEvaluation.Application.Sales.DeleteSaleItem;
 /// <summary>
 ///     Command for delete sale item.
 /// </summary>

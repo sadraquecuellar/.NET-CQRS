@@ -2,7 +2,7 @@
 using FluentValidation;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Sales.DeleSaleItem;
+namespace Ambev.DeveloperEvaluation.Application.Sales.DeleteSaleItem;
 
 /// <summary>
 ///     Handler for processing DeleteSaleItemCommand requests

@@ -35,7 +35,7 @@ public class GetListSaleItemResult
     /// <summary>
     ///     Discount applied to the product.
     /// </summary>
-    public decimal Discount { get; set; }
+    public decimal DiscountAmount { get; set; }
 
     /// <summary>
     ///     Total amount for the item after applying discount.
