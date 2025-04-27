@@ -50,6 +50,7 @@ See [Instructions](/.doc/instructions.md)
    ```
 
 8. **Open Swagger UI:**
+
    Open your browser and go to https://localhost:8081/swagger/index.html to see the Swagger UI.
 
 ## Notes
