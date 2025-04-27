@@ -1,4 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
+using Ambev.DeveloperEvaluation.Domain.Common.Messaging.Events;
+using Ambev.DeveloperEvaluation.Domain.Common.Messaging.Interfaces;
 using Ambev.DeveloperEvaluation.Domain.Sales.Entities;
 using Ambev.DeveloperEvaluation.Domain.Sales.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.Sales.TestData;
@@ -19,6 +21,7 @@ public class CreateSaleHandlerTests
     private readonly CreateSaleHandler _handler;
     private readonly IMapper _mapper;
     private readonly ISaleRepository _saleRepository;
+    private readonly IMessageBroker _rabbitMessageBroker;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="CreateSaleHandlerTests" /> class.
@@ -28,7 +31,8 @@ public class CreateSaleHandlerTests
     {
         _saleRepository = Substitute.For<ISaleRepository>();
         _mapper = Substitute.For<IMapper>();
-        _handler = new CreateSaleHandler(_saleRepository, _mapper);
+        _rabbitMessageBroker = Substitute.For<IMessageBroker>();
+        _handler = new CreateSaleHandler(_saleRepository, _mapper, _rabbitMessageBroker);
     }
 
     /// <summary>
@@ -67,6 +71,7 @@ public class CreateSaleHandlerTests
         createSaleResult.Should().NotBeNull();
         createSaleResult.Id.Should().Be(sale.Id);
         await _saleRepository.Received(1).CreateAsync(Arg.Any<Sale>(), Arg.Any<CancellationToken>());
+        _rabbitMessageBroker.Received(1).PublishEvent(Arg.Any<string>(), Arg.Any<IDomainEvent>());
     }
 
     /// <summary>
@@ -121,6 +126,7 @@ public class CreateSaleHandlerTests
                    c.Customer == command.Customer
                 && c.Branch == command.Branch
                 && c.Items == command.Items));
+        _rabbitMessageBroker.Received(1).PublishEvent(Arg.Any<string>(), Arg.Any<IDomainEvent>());
     }
 
 
