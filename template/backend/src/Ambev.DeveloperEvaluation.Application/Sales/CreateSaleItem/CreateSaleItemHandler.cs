@@ -45,8 +45,10 @@ public class CreateSaleItemHandler : IRequestHandler<CreateSaleItemCommand, Crea
             throw new InvalidOperationException($"Sale with ID {command.SaleId} not found");
 
         var saleItem = _mapper.Map<SaleItem>(command);
-        sale.Items.Add(saleItem);
 
+        SaleItem saleitemCreated = await _saleRepository.CreateItemAsync(saleItem);
+
+        sale.AddItem(saleItem.Product, saleItem.Quantity, saleItem.UnitPrice);
         await _saleRepository.UpdateAsync(sale, cancellationToken);
 
         var result = _mapper.Map<CreateSaleItemResult>(saleItem);

@@ -36,6 +36,19 @@ public class SalesRepository : ISaleRepository
     }
 
     /// <summary>
+    ///     Creates a new sale item in the database
+    /// </summary>
+    /// <param name="saleItem">The sale item to create</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The created sale item</returns>
+    public async Task<SaleItem> CreateItemAsync(SaleItem saleItem, CancellationToken cancellationToken = default)
+    {
+        await _context.SaleItem.AddAsync(saleItem, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return saleItem;
+    }
+
+    /// <summary>
     ///     Returns a sale by Id
     /// </summary>
     /// <param name="id">The unique identifier of the sale</param>
