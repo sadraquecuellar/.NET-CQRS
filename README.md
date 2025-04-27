@@ -39,15 +39,18 @@ See [Instructions](/.doc/instructions.md)
    dotnet build .\Ambev.DeveloperEvaluation.sln --no-restore
    ```
 
-6. **Start Docker containers:**
+6. **Run the unit tests:**
+   ```bash
+   dotnet test "tests\Ambev.DeveloperEvaluation.Unit\Ambev.DeveloperEvaluation.Unit.csproj" --logger "console;verbosity=detailed"
+   ```
+
+7. **Start Docker containers:**
    ```bash
    docker-compose up --build
    ```
 
-7. **Run the unit tests:**
-   ```bash
-   dotnet test "tests\Ambev.DeveloperEvaluation.Unit\Ambev.DeveloperEvaluation.Unit.csproj" --logger "console;verbosity=detailed"
-   ```
+8. **Open Swagger UI:**
+   Open your browser and go to https://localhost:8081/swagger/index.html to see the Swagger UI.
 
 ## Notes
 - Make sure Docker is running before executing `docker-compose up`.
