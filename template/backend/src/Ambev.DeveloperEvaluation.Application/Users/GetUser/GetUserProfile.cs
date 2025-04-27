@@ -1,5 +1,5 @@
 using AutoMapper;
-using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Users.Entities;
 
 namespace Ambev.DeveloperEvaluation.Application.Users.GetUser;
 

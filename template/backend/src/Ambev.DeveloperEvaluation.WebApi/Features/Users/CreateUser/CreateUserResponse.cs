@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Domain.Enums;
+using Ambev.DeveloperEvaluation.Domain.Users.Enums;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
 
@@ -15,17 +15,17 @@ public class CreateUserResponse
     /// <summary>
     /// The user's full name
     /// </summary>
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; }
 
     /// <summary>
     /// The user's email address
     /// </summary>
-    public string Email { get; set; } = string.Empty;
+    public string Email { get; set; }
 
     /// <summary>
     /// The user's phone number
     /// </summary>
-    public string Phone { get; set; } = string.Empty;
+    public string Phone { get; set; }
 
     /// <summary>
     /// The user's role in the system

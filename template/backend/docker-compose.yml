@@ -12,11 +12,19 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
     ports:
-      - "8080"
-      - "8081"
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - ambev.developerevaluation.database
+      - ambev.developerevaluation.nosql
+      - ambev.developerevaluation.cache
+      - ambev.developerevaluation.messagebroker
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    command: >
+      /usr/local/bin/dockerize -wait tcp://ambev.developereevaluation.database:5432 -wait tcp://ambev.developereevaluation.nosql:27017 -wait tcp://ambev.developereevaluation.cache:6379 -wait tcp://ambev.developereevaluation.messagebroker:5672 -timeout 60s &&
+      dotnet Ambev.DeveloperEvaluation.WebApi.dll
 
   ambev.developerevaluation.database:
     container_name: ambev_developer_evaluation_database
@@ -27,7 +35,7 @@ services:
       POSTGRES_USER: developer
       POSTGRES_PASSWORD: ev@luAt10n
     ports:
-      - "5432"
+      - "5432:5432"
     restart: unless-stopped
 
   ambev.developerevaluation.nosql:
@@ -37,14 +45,21 @@ services:
         MONGO_INITDB_ROOT_USERNAME: developer
         MONGO_INITDB_ROOT_PASSWORD: ev@luAt10n
     ports:
-      - "27017"
+      - "27017:27017"
 
   ambev.developerevaluation.cache:
     container_name: ambev_developer_evaluation_cache 
     image: redis:7.4.1-alpine     
     command: redis-server --requirepass ev@luAt10n
-    environment:
-       MONGO_INITDB_ROOT_USERNAME: developer
-       MONGO_INITDB_ROOT_PASSWORD: ev@luAt10n
     ports:
-       - "6379"
+       - "6379:6379"
+
+  ambev.developerevaluation.messagebroker:
+    container_name: ambev_developer_evaluation_messagebroker
+    image: rabbitmq:3-management     
+    environment:
+       RABBITMQ_DEFAULT_USER: developer
+       RABBITMQ_DEFAULT_PASS: evaluAt10n
+    ports:
+       - "15672:15672"
+       - "5672:5672"

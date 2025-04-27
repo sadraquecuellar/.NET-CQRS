@@ -20,6 +20,12 @@ COPY . .
 WORKDIR "/src/src/Ambev.DeveloperEvaluation.WebApi"
 RUN dotnet build "./Ambev.DeveloperEvaluation.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+#dockerize
+RUN apt-get update && apt-get install -y wget \
+    && wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz \
+    && tar -xzvf dockerize-linux-amd64-v0.6.1.tar.gz -C /usr/local/bin \
+    && rm dockerize-linux-amd64-v0.6.1.tar.gz
+
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./Ambev.DeveloperEvaluation.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
