@@ -54,7 +54,7 @@ services:
     image: rabbitmq:3-management     
     environment:
        RABBITMQ_DEFAULT_USER: developer
-       RABBITMQ_DEFAULT_PASS: ev@luAt10n
+       RABBITMQ_DEFAULT_PASS: evaluAt10n
     ports:
        - "15672:15672"
        - "5672:5672"
