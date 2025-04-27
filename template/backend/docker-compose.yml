@@ -22,6 +22,9 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    command: >
+      /usr/local/bin/dockerize -wait tcp://ambev.developereevaluation.database:5432 -wait tcp://ambev.developereevaluation.nosql:27017 -wait tcp://ambev.developereevaluation.cache:6379 -wait tcp://ambev.developereevaluation.messagebroker:5672 -timeout 60s &&
+      dotnet Ambev.DeveloperEvaluation.WebApi.dll
 
   ambev.developerevaluation.database:
     container_name: ambev_developer_evaluation_database
