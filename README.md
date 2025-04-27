@@ -21,7 +21,7 @@ See [Instructions](/.doc/instructions.md)
 
 2. **Navigate to the project folder:**
    ```bash
-   cd "[YourPath]\Teste AMBEV\template\backend"
+   cd "[YourPath]\AMBEV-Test\template\backend"
    ```
 
 3. **Clean the solution:**
