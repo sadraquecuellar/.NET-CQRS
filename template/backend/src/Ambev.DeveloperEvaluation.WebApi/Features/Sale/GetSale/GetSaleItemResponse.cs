@@ -38,6 +38,11 @@ public class GetSaleItemResponse
     public decimal DiscountAmout { get; set; }
 
     /// <summary>
+    ///     Discount percentage applied to the product.
+    /// </summary>
+    public decimal DiscountPercentage { get; set; }
+
+    /// <summary>
     ///     Total amount for the item after applying discount.
     /// </summary>
     public decimal Total { get; set; }

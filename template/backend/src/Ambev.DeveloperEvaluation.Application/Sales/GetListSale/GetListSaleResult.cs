@@ -32,6 +32,11 @@ public class GetListSaleResult
     /// </summary>
     public Branch Branch { get; set; }
 
+    /// <summary>
+    ///     Total Amount
+    /// </summary>
+    public decimal TotalAmount { get; set; }
+
 
     /// <summary>
     ///     List of sale items.
