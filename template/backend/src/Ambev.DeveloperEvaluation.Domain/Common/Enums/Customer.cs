@@ -1,8 +1,15 @@
 ﻿namespace Ambev.DeveloperEvaluation.Domain.Common.Enums;
 public enum Customer
 {
-    CustomerX = 1,
-    CustomerY = 2,
-    CustomerZ = 3,
+    CustomerQ = 1,
+    CustomerR = 2,
+    CustomerS = 3,
+    CustomerT = 4,
+    CustomerU = 5,
+    CustomerV = 6,
+    CustomerW = 7,
+    CustomerX = 8,
+    CustomerY = 9,
+    CustomerZ = 10
 }
 

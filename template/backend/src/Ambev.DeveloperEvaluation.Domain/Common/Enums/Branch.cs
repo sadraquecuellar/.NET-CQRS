@@ -1,8 +1,15 @@
 ﻿namespace Ambev.DeveloperEvaluation.Domain.Common.Enums;
 public enum Branch
 {
-    BranchX = 1,
-    BranchY = 2,
-    BranchZ = 3,
+    BranchQ = 1,
+    BranchR = 2,
+    BranchS = 3,
+    BranchT = 4,
+    BranchU = 5,
+    BranchV = 6,
+    BranchW = 7,
+    BranchX = 8,
+    BranchY = 9,
+    BranchZ = 10
 }
 
