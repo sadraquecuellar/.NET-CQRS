@@ -57,3 +57,15 @@ See [Instructions](/.doc/instructions.md)
 - Make sure Docker is running before executing `docker-compose up`.
 - Use `docker-compose down` if you need to stop the containers after testing.
 
+# About Project
+The main objective of this project is to implement sales-oriented features, here is all the documentation of the developed routes.
+
+See [Docs - Sales-API](/.doc/sales-api.md)
+
+## Relevant points
+
+Since the focus of the development was on sales functionalities, it was decided to implement some less critical entities as enums, aiming to make the development process more agile and focused on the priorities. Entities such as Products, Branchs, and Customers (which could be treated in the application as a User with a Customer role) were implemented this way. One identified area for improvement in the project would be to implement these entities properly, with all their fields and business rules properly structured.
+
+## Message Broker
+
+As a key differentiator of the project, event dispatching was implemented using the RabbitMQ message broker. During the service implementation, configurations were created to set up exchanges and queues, including predefined dead letter queues (DLQs). This setup facilitates the future implementation of consumers, allowing them to send messages that cannot be processed to the DLQ, which will simplify troubleshooting in the future.
