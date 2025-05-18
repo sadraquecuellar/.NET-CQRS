@@ -16,12 +16,12 @@ See [Instructions](/.doc/instructions.md)
 
 1. **Clone the project from the repository:**
    ```bash
-   git clone https://github.com/sadraquecuellar/AMBEV-Test.git
+   git clone https://github.com/sadraquecuellar/.NET-CQRS.git
    ```
 
 2. **Navigate to the project folder:**
    ```bash
-   cd "[YourPath]\AMBEV-Test\template\backend"
+   cd "[YourPath]\.NET-CQRS\template\backend"
    ```
 
 3. **Clean the solution:**
